@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web;
 using Microsoft.AspNetCore.Builder;
@@ -17,46 +15,6 @@ namespace Honamic.Redirector.Test
 {
     public class RuleTests
     {
-
-        [Theory]
-        // [InlineData("http://www.honamic.dev/pages/contact-us", "https://honamic.dev/pages/contact-us")]
-        // [InlineData("https://honamic.dev/تست-حروف-فارسی-AspNet", "/تست-حروف-فارسی-aspnet/")]
-        [InlineData("https://honamic.dev/AspNet", "/aspnet/")]
-        //[InlineData("https://honamic.dev:8081/Posts?q=1&Param2=Test&param3=هنامیک", "/posts/?q=1&Param2=Test&param3=هنامیک")]
-        public async Task CheckFullRedirect(string requestUri, string redirectUri)
-        {
-            var options = new RewriteOptions()
-                .AddRedirectToHttps()
-                .AddRedirectToNonWww()
-                .ForceToAppendTrailingSlash()
-                .AddRedirectToLowercase()
-                ;
-
-            using var host = new HostBuilder()
-                .ConfigureServices(s => s.AddLogging(c => c.AddConsole(d => d.LogToStandardErrorThreshold = LogLevel.Information)))
-                .ConfigureWebHost(webHostBuilder =>
-                {
-                    webHostBuilder
-                    .UseTestServer()
-                    .Configure(app =>
-                    {
-                        app.UseRewriter(options);
-                    });
-                }).Build();
-
-            await host.StartAsync();
-
-            var server = host.GetTestServer();
-
-            var client = server.CreateClient();
-
-            var response = await client.GetAsync(new Uri(requestUri));
-
-            Assert.Equal(redirectUri, HttpUtility.UrlDecode(response.Headers.Location.OriginalString));
-            Assert.Equal(StatusCodes.Status307TemporaryRedirect, (int)response.StatusCode);
-        }
-
-
         [Theory]
         [InlineData("https://www.honamic.dev/", "https://honamic.dev/")]
         [InlineData("http://www.honamic.dev/pages/contact-us/", "http://honamic.dev/pages/contact-us/")]

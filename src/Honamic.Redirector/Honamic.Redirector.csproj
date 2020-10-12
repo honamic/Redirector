@@ -4,8 +4,8 @@
     <Description>ASP.NET Core middleware for redirect</Description>
     <OutputType>Library</OutputType>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.0.1</Version>
-    <PackageProjectUrl>https://github.com/honamic/Redirector</PackageProjectUrl>
+    <Version>0.0.17</Version>
+    <PackageProjectUrl>https://github.com/honamic/redirector</PackageProjectUrl>
     <PackageTags>Redirect;.NET Core</PackageTags>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
 
