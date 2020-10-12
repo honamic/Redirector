@@ -77,12 +77,14 @@ namespace Honamic.Redirector.Test
 
 
         [Theory]
-        [InlineData("https://honamic.dev/pages/contact-us/", "/pages/contact-us")]
-        [InlineData("https://honamic.dev/تست-حروف-فارسی-aspnet/", "/تست-حروف-فارسی-aspnet")]
-        [InlineData("http://honamic.dev:8081/posts/?q=1&Param2=Test", "/posts?q=1&Param2=Test")]
-        public async Task CheckStripTrailingSlash(string requestUri, string redirectUri)
+        [InlineData("https://honamic.dev/", "/pages/contact-us", true, TrailingSlashAction.ForceToStrip)]
+        [InlineData("https://honamic.dev/pages/contact-us/", "/pages/contact-us/", true, TrailingSlashAction.ForceToAppend)]
+        [InlineData("https://honamic.dev/pages/contact-us/", "/pages/contact-us", true, TrailingSlashAction.ForceToStrip)]
+        [InlineData("https://honamic.dev/تست-حروف-فارسی-aspnet/", "/تست-حروف-فارسی-aspnet", true, TrailingSlashAction.ForceToStrip)]
+        [InlineData("http://honamic.dev:8081/posts/?q=1&Param2=Test", "/posts?q=1&Param2=Test", true, TrailingSlashAction.ForceToStrip)]
+        public async Task CheckStripTrailingSlash(string requestUri, string redirectUri, bool forceLowercaseUrls, TrailingSlashAction trailingSlash)
         {
-            var options = new RewriteOptions().ForceToStripTrailingSlash();
+            var options = new RewriteOptions().AddCanonicalUrl(StatusCodes.Status307TemporaryRedirect, forceLowercaseUrls, trailingSlash);
             using var host = new HostBuilder()
                 .ConfigureWebHost(webHostBuilder =>
                 {
@@ -101,35 +103,6 @@ namespace Honamic.Redirector.Test
             var response = await server.CreateClient().GetAsync(new Uri(requestUri));
 
             Assert.Equal(redirectUri, HttpUtility.UrlDecode(response.Headers.Location.OriginalString));
-            Assert.Equal(StatusCodes.Status307TemporaryRedirect, (int)response.StatusCode);
-        }
-
-        [Theory]
-        [InlineData("https://honamic.dev/pages/contact-us", "/pages/contact-us/")]
-        [InlineData("https://honamic.dev/تست-حروف-فارسی-aspnet", "/تست-حروف-فارسی-aspnet/")]
-        [InlineData("http://honamic.dev:8081/posts?q=1&Param2=Test", "/posts/?q=1&Param2=Test")]
-        public async Task CheckForceToAppendTrailingSlash(string requestUri, string redirectUri)
-        {
-            var options = new RewriteOptions().ForceToAppendTrailingSlash();
-            using var host = new HostBuilder()
-                .ConfigureWebHost(webHostBuilder =>
-                {
-                    webHostBuilder
-                    .UseTestServer()
-                    .Configure(app =>
-                    {
-                        app.UseRewriter(options);
-                    });
-                }).Build();
-
-            await host.StartAsync();
-
-            var server = host.GetTestServer();
-
-            var response = await server.CreateClient().GetAsync(new Uri(requestUri));
-
-            Assert.Equal(redirectUri, HttpUtility.UrlDecode(response.Headers.Location.OriginalString));
-            Assert.Equal(StatusCodes.Status307TemporaryRedirect, (int)response.StatusCode);
         }
     }
 }

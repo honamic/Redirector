@@ -34,9 +34,9 @@ namespace Microsoft.AspNetCore.Rewrite
                 RewriteOptions.AddRedirectToHttps();
             }
 
-            if (options.ForceLowercaseUrls)
+            if (options.ForceLowercaseUrls || options.TrailingSlash != TrailingSlashAction.NoAction)
             {
-                RewriteOptions.AddRedirectToLowercase(statusCode);
+                RewriteOptions.AddCanonicalUrl(statusCode, options.ForceLowercaseUrls, options.TrailingSlash);
             }
 
             switch (options.WwwMode)
@@ -51,20 +51,6 @@ namespace Microsoft.AspNetCore.Rewrite
                     break;
                 default:
                     throw new InvalidEnumArgumentException(nameof(options.WwwMode), (int)options.WwwMode, options.WwwMode.GetType());
-            }
-
-            switch (options.TrailingSlash)
-            {
-                case TrailingSlashAction.NoAction:
-                    break;
-                case TrailingSlashAction.ForceToStrip:
-                    RewriteOptions.ForceToStripTrailingSlash(statusCode);
-                    break;
-                case TrailingSlashAction.ForceToAppend:
-                    RewriteOptions.ForceToAppendTrailingSlash(statusCode);
-                    break;
-                default:
-                    throw new InvalidEnumArgumentException(nameof(options.TrailingSlash), (int)options.TrailingSlash, options.TrailingSlash.GetType());
             }
 
             return RewriteOptions;

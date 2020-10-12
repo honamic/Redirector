@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
 
 namespace Honamic.Redirector
 {
@@ -6,7 +7,7 @@ namespace Honamic.Redirector
     {
         public RedirectorOptions()
         {
-            RedirectStatusCode = 302; // 301 , 308 
+            RedirectStatusCode = StatusCodes.Status307TemporaryRedirect;
             ForceLowercaseUrls = false;
             ForceHttps = false;
             TrailingSlash = TrailingSlashAction.NoAction;
@@ -25,10 +26,7 @@ namespace Honamic.Redirector
         public WwwModeAction WwwMode { get; set; }
 
         public List<RedirectObject> Items { get; set; }
-
     }
-
-    
 
     public enum TrailingSlashAction
     {

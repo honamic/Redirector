@@ -32,9 +32,15 @@ namespace Honamic.Redirector
         {
             try
             {
+
                 if (RedirectObjects == null)
                 {
                     TryInitialize();
+                }
+
+                if (RedirectObjects.Count == 0)
+                {
+                    return null;
                 }
 
                 var path = request.Path;
@@ -114,12 +120,17 @@ namespace Honamic.Redirector
                     InitializeData();
                 }
             }
+            catch (Exception ex)
+            {
+                RedirectObjects = new HashSet<RedirectObject>();
+                _logger.LogError(ex, "Redirector initialize failed.Redirector is now disabled.");
+            }
             finally
             {
                 Monitor.Exit(_lock);
             }
         }
-     
+
         private void InitializeData()
         {
             //todo reinit

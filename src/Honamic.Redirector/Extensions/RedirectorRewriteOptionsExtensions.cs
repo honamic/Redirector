@@ -1,5 +1,6 @@
 ﻿using Honamic.Redirector;
 using Honamic.Redirector.Rules;
+using System;
 using System.ComponentModel;
 
 namespace Microsoft.AspNetCore.Rewrite
@@ -48,13 +49,22 @@ namespace Microsoft.AspNetCore.Rewrite
             return options;
         }
 
+        public static RewriteOptions AddCanonicalUrl(this RewriteOptions options, int statuscode, bool forceLowercaseUrls, TrailingSlashAction trailingSlash)
+        {
+            options.Add(new RedirectToCanonicalUrlRule(statuscode, forceLowercaseUrls, trailingSlash));
+
+            return options;
+        }
+
+        [Obsolete("use AddCanonicalUrl", true)]
         public static RewriteOptions ForceToStripTrailingSlash(this RewriteOptions options)
         {
             options.ForceToStripTrailingSlash(307);
 
             return options;
         }
-        
+
+        [Obsolete("use AddCanonicalUrl", true)]
         public static RewriteOptions ForceToStripTrailingSlashPermanent(this RewriteOptions options)
         {
             options.ForceToStripTrailingSlash(308);
@@ -62,6 +72,7 @@ namespace Microsoft.AspNetCore.Rewrite
             return options;
         }
 
+        [Obsolete("use AddCanonicalUrl", true)]
         public static RewriteOptions ForceToStripTrailingSlash(this RewriteOptions options, int statusCode)
         {
             options.AddRedirect("(.*)/$", "$1", statusCode);
@@ -69,13 +80,15 @@ namespace Microsoft.AspNetCore.Rewrite
             return options;
         }
 
+        [Obsolete("use AddCanonicalUrl", true)]
         public static RewriteOptions ForceToAppendTrailingSlash(this RewriteOptions options)
         {
             options.ForceToAppendTrailingSlash(307);
 
             return options;
         }
-        
+
+        [Obsolete("use AddCanonicalUrl", true)]
         public static RewriteOptions ForceToAppendTrailingSlashPermanent(this RewriteOptions options)
         {
             options.ForceToAppendTrailingSlash(308);
@@ -83,6 +96,7 @@ namespace Microsoft.AspNetCore.Rewrite
             return options;
         }
 
+        [Obsolete("use AddCanonicalUrl", true)]
         public static RewriteOptions ForceToAppendTrailingSlash(this RewriteOptions options, int statusCode)
         {
             options.AddRedirect("(.*[^/])$", "$1/", statusCode);
