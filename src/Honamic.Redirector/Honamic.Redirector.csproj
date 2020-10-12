@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Description>ASP.NET Core middleware for redirect</Description>
+    <OutputType>Library</OutputType>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>0.0.1</Version>
+    <PackageProjectUrl>https://github.com/honamic/Redirector</PackageProjectUrl>
+    <PackageTags>Redirect;.NET Core</PackageTags>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+
+  </PropertyGroup>
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+  
+</Project>
