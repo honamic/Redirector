@@ -133,7 +133,7 @@ namespace Honamic.Redirector
 
         private void InitializeData()
         {
-            //todo reinit
+            //todo reload
 
             using (var scop = _serviceProvider.CreateScope())
             {

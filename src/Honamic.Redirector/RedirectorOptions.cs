@@ -12,7 +12,6 @@ namespace Honamic.Redirector
             ForceHttps = false;
             TrailingSlash = TrailingSlashAction.NoAction;
             WwwMode = WwwModeAction.NoAction;
-            Items = new List<RedirectObject>();
         }
 
         public int RedirectStatusCode { get; set; }
@@ -24,8 +23,6 @@ namespace Honamic.Redirector
         public TrailingSlashAction TrailingSlash { get; set; }
 
         public WwwModeAction WwwMode { get; set; }
-
-        public List<RedirectObject> Items { get; set; }
     }
 
     public enum TrailingSlashAction

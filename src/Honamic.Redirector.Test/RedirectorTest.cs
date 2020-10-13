@@ -25,6 +25,7 @@ namespace Honamic.Redirector.Test
                 .Build();
 
             services.Configure<RedirectorOptions>(configuration.GetSection("Redirector"));
+            services.Configure<RedirectorResurceOptions>(configuration.GetSection("RedirectorResurce"));
             services.AddRedirector();
 
             _serviceProvider = services.BuildServiceProvider();
