@@ -77,10 +77,9 @@ namespace Honamic.Redirector.Test
 
 
         [Theory]
-        [InlineData("https://honamic.dev/", "/pages/contact-us", true, TrailingSlashAction.ForceToStrip)]
-        [InlineData("https://honamic.dev/pages/contact-us/", "/pages/contact-us/", true, TrailingSlashAction.ForceToAppend)]
-        [InlineData("https://honamic.dev/pages/contact-us/", "/pages/contact-us", true, TrailingSlashAction.ForceToStrip)]
-        [InlineData("https://honamic.dev/تست-حروف-فارسی-aspnet/", "/تست-حروف-فارسی-aspnet", true, TrailingSlashAction.ForceToStrip)]
+        [InlineData("https://honamic.dev/pages/contact-us", "/pages/contact-us/", true, TrailingSlashAction.ForceToAppend)]
+        [InlineData("https://honamic.dev/PaGes/contact-us/", "/pages/contact-us", true, TrailingSlashAction.ForceToStrip)]
+        [InlineData("https://honamic.dev/تست-حروف-فارسی-ASPnet/", "/تست-حروف-فارسی-aspnet", true, TrailingSlashAction.ForceToStrip)]
         [InlineData("http://honamic.dev:8081/posts/?q=1&Param2=Test", "/posts?q=1&Param2=Test", true, TrailingSlashAction.ForceToStrip)]
         public async Task CheckStripTrailingSlash(string requestUri, string redirectUri, bool forceLowercaseUrls, TrailingSlashAction trailingSlash)
         {
