@@ -22,7 +22,8 @@ namespace Honamic.Redirector.Sample
         {
 
             services.Configure<RedirectorOptions>(Configuration.GetSection("Redirector"));
-           // services.AddScoped<IRedirectorStorage, DbRedirectorStorage>();
+            services.Configure<RedirectorResurceOptions>(Configuration.GetSection("RedirectorResurce"));
+            // services.AddScoped<IRedirectorStorage, DbRedirectorStorage>();
             services.AddRedirector();
             services.AddScoped<ApplicationDbContext>();
 

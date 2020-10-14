@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Linq;
 using Honamic.Redirector;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace Microsoft.AspNetCore.Builder
+namespace Microsoft.Extensions.DependencyInjection
 {
     public static class RedirectorServiceExtensions
     {
@@ -29,6 +28,7 @@ namespace Microsoft.AspNetCore.Builder
             if (!services.Any(c => c.ServiceType == typeof(IRedirectorStorage)))
             {
                 services.TryAddScoped<IRedirectorStorage, OptionsRedirectorStorage>();
+                services.TryAddSingleton<OptionsChangedHandler>();
             }
 
             services.TryAddSingleton<RedirectorManager>();
