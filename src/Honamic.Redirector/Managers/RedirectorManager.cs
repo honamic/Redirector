@@ -51,7 +51,7 @@ namespace Honamic.Redirector
                     switch (item.Value.Type)
                     {
                         case RedirectType.Path:
-                            if (item.Value.Path.Equals(normalizedPath, StringComparison.InvariantCultureIgnoreCase))
+                            if (item.Value.NormalizedPath.Equals(normalizedPath, StringComparison.InvariantCultureIgnoreCase))
                             {
                                 return new RedirectResult
                                 {
